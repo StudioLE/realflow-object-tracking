@@ -1,4 +1,4 @@
 RealFlow-obj-to-csv
 ===================
 
-Convert .obj files exported from RealFlow to .csv files to import to Grasshopper
+A node.js utility to Convert .obj files exported from RealFlow to .csv files for import to Grasshopper
