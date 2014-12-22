@@ -1,39 +1,11 @@
+// Core modules
+var fs = require('fs')
 
-// Config
-
-//// Environment dev or le20
-var env = 'dev'
-
-if(env == 'le20') {
-	//// Directories
-	var source_dir = '../LE 20 Erosion on Pyramids within Cylinder with Object Tracking/objects'; //'objects'
-	var output_dir = '../LE 20 Erosion on Pyramids within Cylinder with Object Tracking/grasshopper/obj_csv'
-
-	//// Frames to export
-	var frames = [0, 10, 60, 110, 160, 210, 260, 310, 360, 410]
-}
-else if (env == 'dev') {
-	//// Directories
-	var source_dir = 'example'; //'objects'
-	var output_dir = 'output'
-
-	//// Frames to export
-	var frames = [0, 40, 81, 98]
-}
-
-//// File  name
-var object_name = 'pyramid'
-var object_ext = '.obj'
-
-//// Development settings
-var write = true
-var log = true
-
+// App modules
+var config = require('./config')
 
 
 // Global vars
-
-var fs = require('fs')
 var d = new Date()
 var time = [
 	d.getFullYear(),d.getMonth()+1,d.getDate(),d.getHours(),d.getMinutes(),d.getSeconds()
@@ -43,32 +15,32 @@ var time = [
 
 // Script
 
-if(write) {
+if(config.write) {
 	// Create a directory for the output
-	fs.mkdirSync(output_dir +'/'+ time)
+	fs.mkdirSync(config.export_directory +'/'+ time)
 }
 //if(err) throw err
 
-list_obj(source_dir).forEach(function(object) {
-	if(log) console.log(object)
+list_obj(config.source_directory).forEach(function(object) {
+	if(config.log) console.log(object)
 	var coords = []
 	// For every frame read the coordinate data from the .obj file
-	for(var i in frames) {
-		coords.push(process_obj(read_obj(object, frames[i])).join())
+	for(var i in config.track_frames) {
+		coords.push(process_obj(read_obj(object, config.track_frames[i])).join())
 	}
 	// Place each frame on a new line
 	coords = coords.join("\n")
 	console.log(coords)
 
-	var path = output_dir +'/'+ time +'/'+ object +'.csv'
-	if(write) {
+	var path = config.export_directory +'/'+ time +'/'+ object +'.csv'
+	if(config.write) {
 		fs.writeFile(path, coords, function(err) {
 			if(err) throw err
-			if(log) console.log('Data written to: ' + path)
+			if(config.log) console.log('Data written to: ' + path)
 		})
 	}
 	else {
-		if(log) console.log('Writing disabled: ' + path)
+		if(config.log) console.log('Writing disabled: ' + path)
 	}
 }); // foreach objects
 
@@ -78,8 +50,8 @@ list_obj(source_dir).forEach(function(object) {
 
 function list_obj() {
 	// Read the directory
-	if(log) console.log('Reading directory: ' + source_dir)
-	files = fs.readdirSync(source_dir)
+	if(config.log) console.log('Reading directory: ' + config.source_directory)
+	files = fs.readdirSync(config.source_directory)
 
 	//function(err, files) {
 	//if(err) throw err
@@ -87,10 +59,10 @@ function list_obj() {
 	var objects = {}
 
 	files.forEach(function(file) {
-		var path = source_dir + '/' + file
+		var path = config.source_directory + '/' + file
 		
-		// If the file starts with our object_name and ends in .obj
-		if(endsWith(file, object_ext) && startsWith(file, object_name)) {			
+		// If the file starts with our config.object_name and ends in .obj
+		if(endsWith(file, config.object_ext) && startsWith(file, config.object_name)) {			
 			// Remove the sequential frame number from the end of the file
 			var obj = file.substr(0,12)
 			objects[obj] = obj
@@ -116,7 +88,7 @@ function list_obj() {
 function read_obj(object, frame) {
 	// Format the frame number as 5 digits
 	frame = '00000'.substr(0, 5 - frame.toString().length) + frame
-	var path = source_dir + '/' + object + '_' + frame + object_ext
+	var path = config.source_directory + '/' + object + '_' + frame + config.object_ext
 	
 	// Return an array of lines from the file path
 	return fs.readFileSync(path).toString().split("\n")
