@@ -1,5 +1,4 @@
-output/
-sample/objects
-sample/
-ss/
-versions/
+/example
+/export
+/node_modules
+/output
