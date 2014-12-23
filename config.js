@@ -16,6 +16,10 @@ module.exports = {
 	// Which frame numbers would you like to track?
 	track_frames: [0, 40, 81, 98],
 
+	// Track object vertices or midpoint
+	// Either 'mid' or 'vert'
+	track_mode: 'vert',
+
 	// ---------------------------------------
 	// Development settings
 	// ---------------------------------------
