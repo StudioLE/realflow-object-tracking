@@ -8,7 +8,7 @@ var async = require('async')
 // App modules
 var config = require('./config')
 var util = require('./lib/util')
-var out = require('./lib/out')
+var out = require('sqwk')
 var title = require('./lib/title')
 var list_obj = require('./lib/list')
 var read_obj = require('./lib/read')

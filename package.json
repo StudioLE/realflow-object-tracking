@@ -29,6 +29,7 @@
   "homepage": "https://github.com/iSpyCreativity/realflow-object-tracking",
   "dependencies": {
     "async": "^0.9.0",
-    "chalk": "^0.5.1"
+    "chalk": "^0.5.1",
+    "sqwk": "^0.1.0"
   }
 }
