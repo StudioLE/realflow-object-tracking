@@ -4,7 +4,7 @@ module.exports = {
 	// Custom settings
 	// ---------------------------------------
 
-	// Your RealFlow files objects folder
+	// The objects folder of your RealFlow scene
 	source_directory: 'example',
 
 	// Name of the RealFlow object you wish to track

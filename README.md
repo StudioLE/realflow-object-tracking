@@ -4,7 +4,7 @@ A [node.js](http://nodejs.org/) utility to convert `.obj` files exported from Re
 
 ### The scenario
 
-You've got a of objects that move within a RealFlow scene and you would like to track their coordinates frame by frame so you can import and plot the data in Grasshopper.
+You've got a series of objects that move within a RealFlow scene and you would like to track their coordinates frame by frame so you can import and plot the data in Grasshopper.
 
 ### The solution
 
@@ -39,7 +39,19 @@ npm update
 
 ## Configuration
 
-Once installed ensure to change the `source_directory` variable in the `./config.js` file to your RealFlow scene objects folder. You may also like to change the other settings
+Once installed ensure to change the `source_directory` variable in the `./config.js` file to your RealFlow scene objects folder and `object_name` to match the name of your object.
+
+You may also like to change the other settings:
+
+- `source_directory` The objects folder of your RealFlow scene
+
+- `object_name` Name of the RealFlow object you wish to track
+
+- `export_directory` Directory to export files to
+
+- `track_frames` An array of frame numbers to track
+
+- `track_mode` Track the object vertices using `vert` or midpoints with `mid`
 
 ## Usage
 
@@ -49,3 +61,7 @@ To run the utility change to the relevant directory and run `node obj_to_csv`
 cd C:\Users\path\to\realflow-object-tracking\
 node obj_to_csv
 ```
+
+## Troubleshooting
+
+Ensure you've followed the installation and configuration instructions precisely. If you're still having issues feel free to [create an issue here on GitHub](https://github.com/StudioLE/realflow-object-tracking/issues) and I'll try and assist you as soon as I can.
