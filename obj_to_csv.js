@@ -44,7 +44,7 @@ async.waterfall([
 
 		async.each(objects, function(object) {
 			
-			if(config.log) console.log(object)
+			if(config.log) sqwk.send([['Processing object', object]])
 			
 			var coords = []
 			
@@ -85,7 +85,7 @@ async.waterfall([
 			}, function(err) {
 				// Place each frame on a new line
 				coords = coords.join("\n")
-				sqwk.send(coords)
+				sqwk.send([['Object ' + config.track_mode + ' coords'], coords])
 
 				var path = p.join(config.export_directory, time, object) + '.csv'
 
