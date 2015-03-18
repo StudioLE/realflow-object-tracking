@@ -7,11 +7,12 @@
     "example": "example"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node obj_to_csv"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/iSpyCreativity/realflow-object-tracking"
+    "url": "https://github.com/StudioLE/realflow-object-tracking"
   },
   "keywords": [
     "realflow",
@@ -21,15 +22,19 @@
     "obj",
     "object"
   ],
-  "author": "Laurence Elsdon",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/iSpyCreativity/realflow-object-tracking/issues"
+  "author": {
+    "name": "Laurence Elsdon",
+    "email": "hi@studiole.uk",
+    "url": "https://studiole.uk"
   },
-  "homepage": "https://github.com/iSpyCreativity/realflow-object-tracking",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/StudioLE/realflow-object-tracking/issues"
+  },
+  "homepage": "https://github.com/StudioLE/realflow-object-tracking",
+  "preferGlobal": true,
   "dependencies": {
     "async": "^0.9.0",
-    "chalk": "^0.5.1",
     "sqwk": "^0.1.0"
   }
 }
