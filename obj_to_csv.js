@@ -4,7 +4,7 @@ var p = require('path')
 
 // Node modules
 var async = require('async')
-var out = require('sqwk')
+var sqwk = require('sqwk')
 
 // App modules
 var config = require('./config')
@@ -22,18 +22,21 @@ async.waterfall([
 	function(callback) {
 		
 		title(function(err, messages) {
-			out.send(messages)
+			sqwk.send(messages)
 		})
 
 		if(config.write) {
 			// Create a directory for the output
-			fs.mkdirSync(p.join(config.export_directory, time))
+			try {
+				fs.mkdirSync(p.join(config.export_directory, time))
+			} catch(err) {
+				callback(err)
+			}
 		}
 
 		list_obj(config.source_directory, function(err, objects) {
-			if(err) throw err
+			if(err) callback(err)
 			callback(null, objects)
-
 		})
 	
 	},
@@ -82,18 +85,18 @@ async.waterfall([
 			}, function(err) {
 				// Place each frame on a new line
 				coords = coords.join("\n")
-				console.log(coords)
+				sqwk.send(coords)
 
 				var path = p.join(config.export_directory, time, object) + '.csv'
 
 				if(config.write) {
 					fs.writeFile(path, coords, function(err) {
 						if(err) throw err
-						if(config.log) console.log('Data written to: ' + path)
+						if(config.log) sqwk.send([['Data written to', path]])
 					})
 				}
 				else {
-					if(config.log) console.log('Writing disabled: ' + path)
+					if(config.log) sqwk.send([['Writing disabled', path]])
 				}
 			}) // async.eachSeries(frames)
 
@@ -103,6 +106,13 @@ async.waterfall([
 
 		}) // async.each(objects)
 	}], function(err, coords) {
-	 	if(err) throw err
+		if(err) {
+			if(err.code === 'ENOENT') {
+				sqwk.error(['No such file or directory', err.path], true)
+			}
+			else {
+				throw err
+			}
+		}
 	}
 )
